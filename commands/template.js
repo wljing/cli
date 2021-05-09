@@ -31,7 +31,7 @@ module.exports = {
     const tempFilePath = join(execPath, filename);
     console.log('下载完成, 开始解压...', tempFilePath);
     const zip = new adm_zip(tempFilePath);
-    zip.extractAllTo(execPath);
+    zip.extractAllTo(join(execPath, appName));
     unlinkSync(tempFilePath);
   }
 }
