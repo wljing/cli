@@ -1,7 +1,10 @@
 const { resolve, join } = require('path');
 const { getRadio, readDir } = require('../utils');
+const download = require('download');
 
-const templateList = [];
+const templateList = ['react'];
+
+const host = 'https://github.com/wljing/cli/tree/master/template/';
 
 module.exports = {
   descript: '模板',
@@ -15,14 +18,8 @@ module.exports = {
       }
     }
     if (templateName === '') {
-      const templateList = [];
-      templateMap.forEach((_, key) => {
-        templateList.push(key);
-      })
-      templateName = await getRadio('项目模板', templateList)
-        .then(res => {
-          console.log('res', res);
-        })
+      templateName = await getRadio('项目模板', templateList);
+      const url = `${host}${templateName}.zip`;
     }
   }
 }
