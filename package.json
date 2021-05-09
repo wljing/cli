@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/wljing/cli#readme",
   "dependencies": {
+    "adm-zip": "^0.5.5",
     "colors": "^1.4.0",
     "download": "^8.0.0",
-    "inquirer": "^8.0.0",
-    "unzip": "^0.1.11"
+    "inquirer": "^8.0.0"
   }
 }
