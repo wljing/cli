@@ -1,0 +1,23 @@
+{
+  "name": "wljingcli",
+  "version": "1.0.0",
+  "description": "some tools commands",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wljing/cli.git"
+  },
+  "author": "wljing",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wljing/cli/issues"
+  },
+  "homepage": "https://github.com/wljing/cli#readme",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "inquirer": "^8.0.0"
+  }
+}
