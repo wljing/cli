@@ -76,12 +76,12 @@ module.exports = {
       template: resolve('index.html'),
       filename: 'index.html'
     }),
-    new webpack.DllReferencePlugin({
-      manifest: resolve('dll', 'react.manifest.json'),
-    }),
-    new webpack.DllReferencePlugin({
-      manifest: resolve('dll', 'reactDom.manifest.json'),
-    }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: resolve('dll', 'react.manifest.json'),
+    // }),
+    // new webpack.DllReferencePlugin({
+    //   manifest: resolve('dll', 'reactDom.manifest.json'),
+    // }),
     ...dllFilenameList.map(filename => {
       console.log(resolve('dll', filename));
       return new AddAssetHtmlWebpackPlugin({

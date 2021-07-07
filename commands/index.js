@@ -6,7 +6,7 @@ const startCommand = Symbol('start');
 const commandMap = new Map([
   [startCommand, {
     exec: () => {
-
+      execCommand('help')
     }
   }]
 ]);
@@ -25,7 +25,7 @@ Object.keys(commandFiles).forEach(filename => {
  * @returns 
  */
 const execCommand = async (command, params) => {
-  const { exec, descriptor } = commandMap.get(command) || {};
+  const { exec } = commandMap.get(command) || {};
   if (typeof exec === 'function') {
     return exec({
       params,

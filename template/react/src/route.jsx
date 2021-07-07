@@ -1,9 +1,9 @@
-import { HashRouter as Router, Route } from 'react-route-dom';
+import { HashRouter as Router, Route } from 'react-router-dom';
 
 const Home = () => <div>home page</div>;
 
 export default () => {
   <Router>
-    <Route path="/" exact components={Home}></Route>
+    <Route path="/" exact component={Home} />
   </Router>
 };

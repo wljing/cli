@@ -13,7 +13,7 @@ const config = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
   ],
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
 };
 
 module.exports = merge(base, config);

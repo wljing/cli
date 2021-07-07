@@ -1,7 +1,10 @@
 {
-  "name": "wljingcli",
-  "version": "1.0.0",
-  "description": "some tools commands",
+  "bin": {
+    "wljing-cli": "index.js"
+  },
+  "name": "wljing_cli_test",
+  "version": "0.0.3",
+  "description": "A test package",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"

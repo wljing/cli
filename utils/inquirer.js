@@ -6,6 +6,7 @@
 
 const inquirer = require('inquirer');
 
+// 字符输入
 const getInput = (key, options = {}) => {
   return new Promise((resolve, reject) => {
     inquirer.prompt([{
@@ -19,6 +20,7 @@ const getInput = (key, options = {}) => {
   })
 };
 
+// 单选
 const getRadio = (key, choices, options = {}) => {
   return new Promise((resolve, reject) => {
     inquirer.prompt([{
@@ -33,6 +35,7 @@ const getRadio = (key, choices, options = {}) => {
   })
 };
 
+// 是/否选项
 const getIs = (key, options = {}) => {
   return new Promise((resolve, reject) => {
     inquirer.prompt([{
