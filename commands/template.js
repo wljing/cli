@@ -6,7 +6,8 @@ const { writeFileSync, fstat, rmdirSync, unlinkSync } = require('fs');
 
 const templateList = ['react'];
 
-const host = 'https://github.com/wljing/cli/raw/master/template/';
+const host = 'https://raw.githubusercontent.com/wljing/cli/master/template/';
+
 
 module.exports = {
   descript: '模板',
