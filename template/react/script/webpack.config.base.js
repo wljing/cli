@@ -1,35 +1,34 @@
 const webpack = require('webpack');
-const { join, resolve } = require('path');
-const htmlWebpackPlugin = require("html-webpack-plugin");
 const Happypack = require('happypack');
+const { resolve } = require("path");
 const os = require('os');
-const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
-const fs = require('fs');
-
-const dllFilenameList = fs.readdirSync(resolve('dll'), { encoding: 'utf-8' }).filter(v => /.js$/.test(v));
+const htmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const happypackPool = Happypack.ThreadPool({ size: os.cpus().length });
+
 const plugins = [
+  // happypack plugins
   new Happypack({
     id: 'js',
     threads: 3,
     verbose: false,
-    loaders: ['babel-loader'],
+    loaders: ['babel-loader?cacheDirectory=true'],
     threadPool: happypackPool,
     debug: false,
   }),
-  // new Happypack({
-  //   id: 'ts',
-  //   loaders: ['ts-loader'],
-  //   threadPool: happypackPool,
-  // }),
+  new Happypack({
+    id: 'ts',
+    loaders: ['babel-loader?cacheDirectory=true'],
+    threadPool: happypackPool,
+  }),
   new Happypack({
     id: 'css',
-    loaders: ['style-loader', 'css-loader'],
+    loaders: ['style-loader', 'css-loader', 'postcss-loader'],
     threadPool: happypackPool,
   }),
   new Happypack({
     id: 'sass',
-    loaders: ['style-loader', 'css-loader', 'sass-loader'],
+    loaders: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'],
     threadPool: happypackPool,
   }),
   new Happypack({
@@ -37,24 +36,34 @@ const plugins = [
     loaders: ['file-loader'],
     threadPool: happypackPool,
   }),
+
+  new htmlWebpackPlugin({
+    template: resolve('index.html'),
+    filename: 'index.html'
+  }),
 ];
 
-module.exports = {
+const config = {
   entry: {
-    index: './index.js',
+    app: './index.js',
+    vendors: ['react', 'react-dom'],
   },
+  
   output: {
     path: resolve('dist'),
-    filename: '[name]..js',
+    filename: '[name]_[hash].js',
   },
-  resolve: {
-    extensions: ['.js', '.jsx', '.css', '.json'],
-  },
+
   module: {
     rules: [
       {
-        test: /\.js|jsx$/,
+        test: /\.jsx?$/,
         use: ['happypack/loader?id=js'],
+        exclude: /node_module/,
+      },
+      {
+        test: /\.tsx?$/,
+        use: ['happypack/loader?id=ts'],
         exclude: /node_module/,
       },
       {
@@ -69,25 +78,16 @@ module.exports = {
         test: /\.(png|jpg|gif)$/,
         use: ['happypack/loader?id=file'],
       },
-    ]
+    ],
   },
-  plugins: [
-    new htmlWebpackPlugin({
-      template: resolve('index.html'),
-      filename: 'index.html'
-    }),
-    // new webpack.DllReferencePlugin({
-    //   manifest: resolve('dll', 'react.manifest.json'),
-    // }),
-    // new webpack.DllReferencePlugin({
-    //   manifest: resolve('dll', 'reactDom.manifest.json'),
-    // }),
-    ...dllFilenameList.map(filename => {
-      console.log(resolve('dll', filename));
-      return new AddAssetHtmlWebpackPlugin({
-        filepath: resolve('dll', filename),
-      })
-    }),
-    ...plugins,
-  ],
-}
+
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.css', '.json'],
+  },
+
+  devtool: 'eval-source-map',
+
+  plugins,
+};
+
+module.exports = config;
